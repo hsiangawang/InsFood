@@ -11,6 +11,29 @@ const port = 3000;
 var app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+
+// Connect to MySQL DB
+var mysql = require('mysql');
+
+var mysql_connection = mysql.createConnection({
+  host     : "insfood-database.cotdjnfrrj8j.us-east-2.rds.amazonaws.com",
+  database : "InsFood",
+  user     : "admin",
+  password : "xddd1234",
+  port     : 3306
+});
+
+mysql_connection.connect(function(err) {
+  if (err) {
+    console.error('Database connection failed: ' + err.stack);
+    return;
+  }
+
+  console.log('Connected to database.');
+});
+
+mysql_connection.end();
+
 // Connect to mongoDB cluster
 const mongo_connection = 'mongodb+srv://Adam:XDBoost@cluster0.clmro.mongodb.net/user_auth?retryWrites=true&w=majority'
 mongoose.connect(mongo_connection, {
