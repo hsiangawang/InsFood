@@ -23,7 +23,7 @@ class RestaurantSearch(Resource):
         restaurant = []
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()
-        sql = 'SELECT name, categories, url, image_url, latitude, longtitude FROM Restaurant WHERE name = "' + restaurant_name + '"'
+        sql = 'SELECT name, categories, url, image_url, latitude, longtitude, rating FROM Restaurant WHERE name = "' + restaurant_name + '"'
         cursor.execute(sql)
 
         for u in cursor:

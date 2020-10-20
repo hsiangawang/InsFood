@@ -7,6 +7,7 @@ from InsFood.resource.user_register import UserRegister
 from InsFood.resource.login import Login
 from InsFood.resource.logout import Logout
 from InsFood.resource.restaurants import Restaurants
+from InsFood.resource.restaurant_search import RestaurantSearch
 
 def create_app():
 
@@ -20,6 +21,7 @@ def create_app():
     api.add_resource(Login, '/login')
     api.add_resource(Logout, '/logout')
     api.add_resource(Restaurants, '/restaurants')
+    api.add_resource(RestaurantSearch, '/search')
 
     return app
 

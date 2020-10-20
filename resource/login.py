@@ -20,7 +20,6 @@ class Login(Resource):
         """ 
             user login
         """
-        
         args = Login.parser.parse_args()
         user_name = args.get('username')
         password  = args.get('password')
