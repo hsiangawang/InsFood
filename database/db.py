@@ -83,7 +83,7 @@ def main():
                          image_url varchar(128) NOT NULL,
                          latitude varchar(45) NOT NULL,
                          longtitude varchar(45) NOT NULL,
-                         rating int(20) NOT NULL,
+                         rating real NOT NULL,
                          PRIMARY KEY (restaurant_id)); """
     
     like_table_create = """CREATE TABLE IF NOT EXISTS LikeList ( 
