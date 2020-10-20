@@ -63,9 +63,9 @@ def main():
                          nick_name varchar(128) NOT NULL,
                          PRIMARY KEY (user_id)); """
     
-    '''
+    
     friendship_table_create = """CREATE TABLE IF NOT EXISTS Friendship ( 
-                         friendship_id int(20) NOT NULL,
+                         friendship_id int(20) AUTO_INCREMENT NOT NULL,
                          user1_id int(20) NOT NULL,
                          user2_id int(20) NOT NULL,
                          PRIMARY KEY (friendship_id),
@@ -73,20 +73,20 @@ def main():
                              REFERENCES User(user_id)
                              ON DELETE CASCADE
                              ON UPDATE CASCADE); """
-    '''
+    
     
     restaurant_table_create = """CREATE TABLE IF NOT EXISTS Restaurant ( 
-                         restaurant_id int(20) NOT NULL,
+                         restaurant_id int(20) AUTO_INCREMENT NOT NULL,
                          name varchar(128) NOT NULL,
                          categories varchar(128) NOT NULL,
-                         is_closed boolean NOT NULL,
                          url varchar(128) NOT NULL,
                          image_url varchar(128) NOT NULL,
-                         coordinates int(20) NOT NULL,
+                         latitude varchar(45) NOT NULL,
+                         longtitude varchar(45) NOT NULL,
                          PRIMARY KEY (restaurant_id)); """
-    '''
+    
     like_table_create = """CREATE TABLE IF NOT EXISTS LikeList ( 
-                         user_restaurant_id int(20) NOT NULL,
+                         user_restaurant_id int(20) AUTO_INCREMENT NOT NULL,
                          restaurant_id int(20),
                          user_id int(20) NOT NULL,
                          rating int(20) NOT NULL,
@@ -99,7 +99,7 @@ def main():
                              REFERENCES Restaurant(restaurant_id)
                              ON DELETE SET NULL
                              ON UPDATE CASCADE); """
-    '''
+    
     # initialize db
     user_table_drop = """DROP TABLE IF EXISTS User"""
     friendship_table_drop = """DROP TABLE IF EXISTS Friendship"""
@@ -112,9 +112,9 @@ def main():
         drop_table_if_exists(conn, restaurant_table_drop)
         drop_table_if_exists(conn, user_table_drop)
         create_table(conn, user_table_create, 'User')
-        #create_table(conn, friendship_table_create, 'Friendship')
+        create_table(conn, friendship_table_create, 'Friendship')
         create_table(conn, restaurant_table_create, 'Restaurant')
-        #create_table(conn, like_table_create, 'LikeList')
+        create_table(conn, like_table_create, 'LikeList')
         conn.close()
     else:
         print("Error! cannot create the database connection.")
