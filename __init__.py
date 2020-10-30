@@ -11,6 +11,10 @@ from InsFood.resource.restaurants import Restaurants
 from InsFood.resource.restaurant_search import RestaurantSearch
 from InsFood.resource.friendships import Friendships
 from InsFood.resource.friendship import CheckFriends
+from InsFood.resource.friendship_update import UpdateFriends
+from InsFood.resource.likelists import Likelists
+from InsFood.resource.likelist import CheckLikeList
+from InsFood.resource.likelist_update import UpdateLikeList
 
 def create_app():
 
@@ -20,7 +24,7 @@ def create_app():
 
     api.add_resource(HomePage, '/')
     api.add_resource(Users, '/users') # testing route
-    api.add_resource(UserInfo, '/user')
+    api.add_resource(UserInfo, '/user/<string:username>')
     api.add_resource(UserRegister, '/register')
     api.add_resource(Login, '/login')
     api.add_resource(Logout, '/logout')
@@ -28,6 +32,10 @@ def create_app():
     api.add_resource(RestaurantSearch, '/search/<string:restaurant>')
     api.add_resource(Friendships, '/friendships') # testing route
     api.add_resource(CheckFriends, '/friendship/<string:username>')
+    api.add_resource(UpdateFriends, '/friendship')
+    api.add_resource(Likelists, '/likelists') # testing route
+    api.add_resource(CheckLikeList, '/likelist/<string:username>')
+    api.add_resource(UpdateLikeList, '/likelist')
 
     return app
 

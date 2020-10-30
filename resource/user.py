@@ -7,13 +7,6 @@ from InsFood.database import db
 
 class UserInfo(Resource):
 
-    # parser for get
-    get_parser = reqparse.RequestParser()
-    get_parser.add_argument(
-        'user_name', type=str, required=True,
-        help='{error_msg}'
-    )
-
     # parser for put
     put_parser = reqparse.RequestParser()
     put_parser.add_argument(
@@ -26,12 +19,11 @@ class UserInfo(Resource):
     )
     
 
-    def get(self):
+    def get(self, username):
         '''
             get information of user
         '''
-        args = UserInfo.get_parser.parse_args()
-        user_name = args.get('user_name')
+        user_name = username
         user = []
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()

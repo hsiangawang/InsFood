@@ -5,11 +5,11 @@ import mysql.connector
 from mysql.connector import Error
 from InsFood.database import db
 
-class CheckFriends(Resource):
-
+class CheckLikeList(Resource):
+    
     def get(self, username):
         """ 
-            user's friends
+            user's like list
         """
         user_name = username
         print("user_name: ", user_name)
@@ -18,15 +18,16 @@ class CheckFriends(Resource):
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()
         sql = '''
-            SELECT u.user_name
-            FROM User u JOIN (SELECT fr.user2_id AS id
-            FROM User u JOIN Friendship fr ON u.user_id=fr.user1_id
-            WHERE u.user_name = "{user_name}") As tmp ON u.user_id=tmp.id 
+            SELECT r.name, r.categories, r.url, r.image_url, r.latitude, r.longitude, r.rating
+            FROM Restaurant r JOIN (SELECT l.restaurant_id AS id
+            FROM User u JOIN LikeList l ON u.user_id=l.user_id
+            WHERE u.user_name = "{user_name}") As tmp ON r.restaurant_id=tmp.id 
         '''.format(user_name=user_name)
         print(sql)
         cursor.execute(sql)
-        user_friend = []
+        user_likelist = []
         for name in cursor:
-            user_friend.append(name)
+            user_likelist.append(name)
         
-        return user_friend, 200
+        return user_likelist, 200
+    
