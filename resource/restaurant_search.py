@@ -7,19 +7,11 @@ from InsFood.database import db
 
 class RestaurantSearch(Resource):
 
-    parser = reqparse.RequestParser()
-    parser.add_argument(
-        'restaurant_name', type=str, required=True,
-        help='{error_msg}'
-    )
-    
-
-    def get(self):
+    def get(self, restaurant):
         '''
             get information of specific restaurant
         '''
-        args = RestaurantSearch.parser.parse_args()
-        restaurant_name = args.get('restaurant_name')
+        restaurant_name = restaurant
         restaurant = []
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()

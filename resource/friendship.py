@@ -6,12 +6,7 @@ from mysql.connector import Error
 from InsFood.database import db
 
 class CheckFriends(Resource):
-    # parser for get
-    get_parser = reqparse.RequestParser()
-    get_parser.add_argument(
-        'username', type=str, required=True,
-        help='{error_msg}'
-    )
+
     # parser for post
     post_parser = reqparse.RequestParser()
     post_parser.add_argument(
@@ -33,12 +28,11 @@ class CheckFriends(Resource):
         help='{error_msg}'
     )
 
-    def get(self):
+    def get(self, username):
         """ 
             user's friends
         """
-        args = CheckFriends.get_parser.parse_args()
-        user_name = args.get('username')
+        user_name = username
         print("user_name: ", user_name)
         
         # check the user is in the database or not

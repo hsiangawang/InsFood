@@ -25,9 +25,9 @@ def create_app():
     api.add_resource(Login, '/login')
     api.add_resource(Logout, '/logout')
     api.add_resource(Restaurants, '/restaurants')
-    api.add_resource(RestaurantSearch, '/search')
+    api.add_resource(RestaurantSearch, '/search/<string:restaurant>')
     api.add_resource(Friendships, '/friendships') # testing route
-    api.add_resource(CheckFriends, '/friendship')
+    api.add_resource(CheckFriends, '/friendship/<string:username>')
 
     return app
 
