@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Oct  4 14:06:27 2020
+
 @author: Jasmine Kuo
 """
 # pip install mysql-connector-python
@@ -84,13 +85,15 @@ def main():
                          latitude varchar(45) NOT NULL,
                          longitude varchar(45) NOT NULL,
                          rating real NOT NULL,
+                         phone varchar(45) NOT NULL,
+                         address varchar(128) NOT NULL,
+                         location varchar(128) NOT NULL,
                          PRIMARY KEY (restaurant_id)); """
     
     like_table_create = """CREATE TABLE IF NOT EXISTS LikeList ( 
                          user_restaurant_id int(20) AUTO_INCREMENT NOT NULL,
                          restaurant_id int(20),
                          user_id int(20) NOT NULL,
-                         rating int(20) NOT NULL,
                          PRIMARY KEY (user_restaurant_id),
                          FOREIGN KEY (user_id)
                              REFERENCES User(user_id)
@@ -122,3 +125,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
