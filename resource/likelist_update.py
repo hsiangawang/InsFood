@@ -17,10 +17,12 @@ class UpdateLikeList(Resource):
         'restaurant_name', type=str, required=True,
         help='{error_msg}'
     )
+    '''
     post_parser.add_argument(
         'rating', type=int, required=True,
         help='{error_msg}'
     )
+    '''
     '''
     # parser for delete
     delete_parser = reqparse.RequestParser()
@@ -41,11 +43,11 @@ class UpdateLikeList(Resource):
         args = UpdateLikeList.post_parser.parse_args()
         user_name = args.get('user_name')
         restaurant_name = args.get('restaurant_name')
-        rating = args.get('rating')
+        #rating = args.get('rating')
         newlike = {
             'user_name':args.get('user_name'),
-            'restaurant_name':args.get('restaurant_name'),
-            'rating':args.get('rating')
+            'restaurant_name':args.get('restaurant_name')
+            #'rating':args.get('rating')
         }
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()
@@ -69,7 +71,7 @@ class UpdateLikeList(Resource):
         print(restaurant_id)
 
         # Insert new restaurant into LikeList table
-        sql_3 = "INSERT INTO LikeList (user_id, restaurant_id, rating) VALUES ({user_id}, {restaurant_id}, {rating});".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0], rating=rating)
+        sql_3 = "INSERT INTO LikeList (user_id, restaurant_id) VALUES ({user_id}, {restaurant_id});".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
         print(sql_3)
         cursor.execute(sql_3)
 
