@@ -10,7 +10,7 @@ class Restaurants(Resource):
         restaurant_list = []
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()
-        sql = 'SELECT name, categories, url, image_url, latitude, longitude, rating, phone, address, location, restaurant_id FROM Restaurant;'
+        sql = 'SELECT name, categories, url, image_url, latitude, longitude, rating, phone, address, location, restaurant_id, review_count FROM Restaurant;'
 
         cursor.execute(sql)
 
