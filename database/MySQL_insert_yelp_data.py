@@ -28,7 +28,7 @@ for offset in range(0, 1000, 20):
         print('400 Bad Request')
         break
 
-need_data = [{key: data[i][key] for key in ['rating', 'phone', 'name', 'categories', 'is_closed', 'url', 'image_url', 'coordinates', 'location']} for i in range(len(data))]
+need_data = [{key: data[i][key] for key in ['rating', 'phone', 'review_count', 'name', 'categories', 'is_closed', 'url', 'image_url', 'coordinates', 'location']} for i in range(len(data))]
 df = pd.DataFrame(need_data)
 df = df[df['is_closed']==False]
 df = df.drop('is_closed', axis = 1)
@@ -50,7 +50,7 @@ conn = pymysql.connect(host='insfood-database.cotdjnfrrj8j.us-east-2.rds.amazona
                        charset='utf8')
 
 # Insert DataFrame recrds one by one.
-sql = "INSERT INTO Restaurant(rating, phone, name, categories, url, image_url, latitude, longitude, address, location) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+sql = "INSERT INTO Restaurant(rating, phone, review_count, name, categories, url, image_url, latitude, longitude, address, location) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
 for i,row in df.iterrows():
     if row.notnull().all():
