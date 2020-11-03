@@ -79,6 +79,7 @@ def main():
     restaurant_table_create = """CREATE TABLE IF NOT EXISTS Restaurant ( 
                          restaurant_id int(20) AUTO_INCREMENT NOT NULL,
                          name varchar(128) NOT NULL,
+                         review_count int(20) NOT NULL,
                          categories varchar(128) NOT NULL,
                          url varchar(128) NOT NULL,
                          image_url varchar(128) NOT NULL,
