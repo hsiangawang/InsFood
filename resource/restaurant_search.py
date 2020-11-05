@@ -11,7 +11,9 @@ class RestaurantSearch(Resource):
         '''
             get information of specific restaurant
         '''
-        restaurant_name = restaurant
+        #restaurant_name = restaurant
+        restaurant_name = restaurant.replace('%20', ' ')
+        print("restaurant name: ", restaurant_name)
         restaurant = []
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()

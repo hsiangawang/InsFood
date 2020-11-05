@@ -23,7 +23,7 @@ class UserInfo(Resource):
         '''
             get information of user
         '''
-        user_name = username
+        user_name = username.replace('%20', ' ')
         user = []
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()

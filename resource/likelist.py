@@ -11,7 +11,7 @@ class CheckLikeList(Resource):
         """ 
             user's like list
         """
-        user_name = username
+        user_name = username.replace('%20', ' ')
         print("user_name: ", user_name)
         
         # check the user is in the database or not
