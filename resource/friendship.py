@@ -18,7 +18,7 @@ class CheckFriends(Resource):
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()
         sql = '''
-            SELECT u.user_name
+            SELECT u.user_id, u.user_name, u.password, u.nick_name
             FROM User u JOIN (SELECT fr.user2_id AS id
             FROM User u JOIN Friendship fr ON u.user_id=fr.user1_id
             WHERE u.user_name = "{user_name}") As tmp ON u.user_id=tmp.id 
