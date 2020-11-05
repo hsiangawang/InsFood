@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, reqparse
 from InsFood.resource.homepage import HomePage
 from InsFood.resource.users import Users
 from InsFood.resource.user import UserInfo
+from InsFood.resource.user_update import UserUpdate
 from InsFood.resource.user_register import UserRegister
 from InsFood.resource.login import Login
 from InsFood.resource.logout import Logout
@@ -24,6 +25,7 @@ def create_app():
 
     api.add_resource(HomePage, '/')
     api.add_resource(Users, '/users') # testing route
+    api.add_resource(UserUpdate, '/user')
     api.add_resource(UserInfo, '/user/<string:username>')
     api.add_resource(UserRegister, '/register')
     api.add_resource(Login, '/login')
