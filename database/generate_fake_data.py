@@ -16,7 +16,7 @@ import names
 
 # Generate user data
 user_list = []
-for i in range(100):
+for i in range(30):
     tmp = names.get_full_name()
     user_list.append([tmp, tmp.replace(" ", "")[::-1], tmp.split(' ')[0]])
 user_df = pd.DataFrame(user_list, columns = ['user_name', 'password', 'nick_name'])
@@ -58,19 +58,9 @@ user_id = [element for tupl in records for element in tupl]
 conn.close()
 
 # Pair user_id for friendship
-import random 
-import itertools 
-def get_random_pairs(numbers): 
-  # Generate all possible non-repeating pairs 
-  pairs = list(itertools.combinations(numbers, 2)) 
- 
-  # Randomly shuffle these pairs 
-  random.shuffle(pairs) 
-  return pairs
+friendship_df = pd.DataFrame([[a, b] for a in user_id for b in user_id if a != b], columns = ['user1_id', 'user2_id']).sample(100).reset_index(drop=True)
 
-friendship_df = pd.DataFrame(get_random_pairs(user_id), columns = ['user1_id', 'user2_id']).sample(100)
-
-# Insert friendship data
+# Insert friendship data into MySQL database
 conn = pymysql.connect(host='insfood-database.cotdjnfrrj8j.us-east-2.rds.amazonaws.com',
                        port=3306,
                        user='admin', 
@@ -86,6 +76,35 @@ for i,row in friendship_df.iterrows():
     # the connection is not autocommitted by default, so we must commit to save our changes
     conn.commit()
 conn.close()
+
+# Connect to Neo4j DB
+from neo4j import GraphDatabase
+
+uri             = "bolt://localhost:7687"
+userName        = "XDBoost"
+password        = "xddd1234"
+
+graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
+
+# DELETE ALL DATA
+cqlCreate = "MATCH (n) DETACH DELETE n"
+with graphDB_Driver.session() as graphDB_Session:
+    graphDB_Session.run(cqlCreate)
+
+# Insert friendship data into Neo4j database
+for i in range(friendship_df.shape[0]):
+    user1_id = friendship_df['user1_id'][i]
+    user2_id = friendship_df['user2_id'][i]
+    cqlCreate = "MERGE (a:Person {id:"+str(user1_id)+"}) MERGE (b:Person {id:"+str(user2_id)+"}) MERGE (a)-[:Friends]->(b)"
+    with graphDB_Driver.session() as graphDB_Session:
+        graphDB_Session.run(cqlCreate)
+
+# Friendship sample code
+'''
+cqlCreate = "MERGE (a:Person {id:96}) MERGE (b:Person {id:62}) MERGE (a)-[:Friends]->(b)"
+with graphDB_Driver.session() as graphDB_Session:
+    graphDB_Session.run(cqlCreate)
+'''    
 
 #======================#
 #====== LikeList ======#
@@ -106,8 +125,7 @@ restaurant_id = [element for tupl in records for element in tupl]
 conn.close()
 
 # Pair restaurant_id and user_id
-likelist_df = pd.DataFrame([[a, b] for a in user_id for b in restaurant_id], columns = ['user_id', 'restaurant_id']).sample(100)
-likelist_df['rating'] = np.random.uniform(low=1, high=5, size=(100,)).astype(int)
+likelist_df = pd.DataFrame([[a, b] for a in user_id for b in restaurant_id], columns = ['user_id', 'restaurant_id']).sample(300).reset_index(drop=True)
 
 # Insert likelist data
 conn = pymysql.connect(host='insfood-database.cotdjnfrrj8j.us-east-2.rds.amazonaws.com',
@@ -117,8 +135,7 @@ conn = pymysql.connect(host='insfood-database.cotdjnfrrj8j.us-east-2.rds.amazona
                        db='InsFood',
                        charset='utf8')
 
-# Insert DataFrame recrds one by one.
-sql = "INSERT INTO LikeList(user_id, restaurant_id, rating) VALUES(%s,%s,%s)"
+sql = "INSERT INTO LikeList(user_id, restaurant_id) VALUES(%s,%s)"
 
 for i,row in likelist_df.iterrows():
     cursor=conn.cursor()
@@ -126,4 +143,20 @@ for i,row in likelist_df.iterrows():
     # the connection is not autocommitted by default, so we must commit to save our changes
     conn.commit()
 conn.close()
+
+# Insert likelist data into Neo4j database
+for i in range(likelist_df.shape[0]):
+    restaurant_id = likelist_df['restaurant_id'][i]
+    user_id = likelist_df['user_id'][i]
+    cqlCreate = "MERGE (a:Person {id:"+str(user_id)+"}) MERGE (b:Restaurant {id:"+str(restaurant_id)+"}) MERGE (a)-[:Likes]->(b)"
+    with graphDB_Driver.session() as graphDB_Session:
+        graphDB_Session.run(cqlCreate)
+
+# LikeList sample code
+'''
+cqlCreate = "MERGE (a:Person {id:96}) MERGE (b:Restaurant {id:1}) MERGE (a)-[:Likes]->(b)"
+with graphDB_Driver.session() as graphDB_Session:
+    graphDB_Session.run(cqlCreate)
+'''
+
 
