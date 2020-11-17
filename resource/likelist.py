@@ -18,7 +18,7 @@ class CheckLikeList(Resource):
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()
         sql = '''
-            SELECT r.name, r.categories, r.url, r.image_url, r.latitude, r.longitude, r.rating
+            SELECT r.name, r.categories, r.url, r.image_url, r.latitude, r.longitude, r.rating, r.phone, r.address, r.location, r.restaurant_id, r.review_count
             FROM Restaurant r JOIN (SELECT l.restaurant_id AS id
             FROM User u JOIN LikeList l ON u.user_id=l.user_id
             WHERE u.user_name = "{user_name}") As tmp ON r.restaurant_id=tmp.id 
