@@ -33,6 +33,7 @@ class UserRegister(Resource):
             'nickname':args.get('nickname'),
             'password':args.get('password')
         }
+        # neo4j may need to add user here
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()
         sql = "INSERT INTO User (user_name, password, nick_name) VALUES (%s, %s, %s);"

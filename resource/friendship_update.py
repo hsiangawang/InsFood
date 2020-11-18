@@ -61,6 +61,8 @@ class UpdateFriends(Resource):
         print(user2_id)
 
         # Insert new friendship into friendship table
+        # neo4j may need insert data here
+        # user1 id is user1_id[0][0], user2 id is user2_id[0][0].
         sql_3 = "INSERT INTO Friendship (user1_id, user2_id) VALUES ({user1_id}, {user2_id});".format(user1_id=user1_id[0][0], user2_id=user2_id[0][0])
         print(sql_3)
         cursor.execute(sql_3)
@@ -98,6 +100,8 @@ class UpdateFriends(Resource):
         print(user2_id)
 
         # Delete friendship from friendship table
+        # neo4j may need delete data here
+        # user1 id is user1_id[0][0], user2 id is user2_id[0][0].
         sql_3 = "DELETE FROM Friendship WHERE user1_id={user1_id} AND user2_id={user2_id};".format(user1_id=user1_id[0][0], user2_id=user2_id[0][0])
         print(sql_3)
         cursor.execute(sql_3)

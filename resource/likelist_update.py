@@ -71,7 +71,7 @@ class UpdateLikeList(Resource):
         print(restaurant_id)
 
         # Insert new restaurant into LikeList table
-        # Neo4j can insert data here
+        # neo4j may need insert data here
         # user id is user_id[0][0], restaurant id is restaurant_id[0][0].
         sql_3 = "INSERT INTO LikeList (user_id, restaurant_id) VALUES ({user_id}, {restaurant_id});".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
         print(sql_3)
@@ -110,6 +110,8 @@ class UpdateLikeList(Resource):
         print(restaurant_id)
 
         # Delete liked restaurant from likelist table
+        # neo4j may need delete data here
+        # user id is user_id[0][0], restaurant id is restaurant_id[0][0].
         sql_3 = "DELETE FROM LikeList WHERE user_id={user_id} AND restaurant_id={restaurant_id};".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
         print(sql_3)
         cursor.execute(sql_3)
