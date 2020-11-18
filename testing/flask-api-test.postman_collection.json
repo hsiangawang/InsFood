@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "02e87044-2048-4835-8a72-feb52d2909d2",
+		"name": "flask-api-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						""
+					]
+				},
+				"description": "get home page"
+			},
+			"response": []
+		},
+		{
+			"name": "/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Pierce\",\n    \"password\": \"IAmPierce\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"login"
+					]
+				},
+				"description": "register a new user"
+			},
+			"response": []
+		},
+		{
+			"name": "/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Pierce\",\n    \"password\": \"IAmPierce\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"login"
+					]
+				},
+				"description": "user login"
+			},
+			"response": []
+		},
+		{
+			"name": "/logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"logout"
+					]
+				},
+				"description": "User log out"
+			},
+			"response": []
+		},
+		{
+			"name": "/restaurants",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3001/restaurants",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"restaurants"
+					]
+				},
+				"description": "get all restaurants"
+			},
+			"response": []
+		},
+		{
+			"name": "/search/<restaurant>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/search/Nando%20Milano%20Trattoria",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"search",
+						"Nando%20Milano%20Trattoria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					]
+				},
+				"description": "get all users (will not in real application)"
+			},
+			"response": []
+		},
+		{
+			"name": "/user<username>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/user/Russell Fredericks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"Russell Fredericks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_name\": \"adam\",\n    \"nick_name\": \"ADAM\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/friendships",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/friendships",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"friendships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/friendship<username>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/friendship/test2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"friendship",
+						"test2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/friendship",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user1_name\": \"test2\",\n    \"user2_name\": \"test1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/friendship",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"friendship"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/likelist",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_name\": \"wayne\",\n    \"restaurant_name\": \"Baxter's American Grille\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/likelist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"likelist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/likelists",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/likelists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"likelists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/likelist/<username>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/likelist/Geraldine Rinks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"likelist",
+						"Geraldine Rinks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/likelist",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_name\": \"Ralph Toney\",\n    \"restaurant_name\": \"Nando Milano Trattoria\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/likelist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"likelist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/friendship",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user1_name\": \"test2\",\n    \"user2_name\": \"test1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/friendship",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"friendship"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tagRecommend/3/4",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/tagRecommend/3/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"tagRecommend",
+						"3",
+						"7"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

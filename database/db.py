@@ -53,6 +53,31 @@ def drop_table_if_exists(conn, drop_table_sql):
             cursor.close()
             print("MySQL connection is closed")
 
+def create_stored_procedure(conn, stored_procedure_sql):
+    try:
+        cursor = conn.cursor()
+        cursor.execute(stored_procedure_sql)
+        print("Create stored procedure")
+    except mysql.connector.Error as error:
+        print("Failed to create procedure in MySQL: {}".format(error))
+    finally:
+        print("!")
+        if conn.is_connected():
+            cursor.close()
+            print("MySQL connection is closed")
+
+def drop_sp_if_exists(conn, drop_sp_sql):
+    try:
+        cursor = conn.cursor()
+        cursor.execute(drop_sp_sql)
+        print("Drop sp if exists")
+    except mysql.connector.Error as error:
+        print("Failed to drop sp in MySQL: {}".format(error))
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            print("MySQL connection is closed")
+
 def main():
     
     conn = create_connection(connection_config_dict)
@@ -111,6 +136,22 @@ def main():
     restaurant_table_drop = """DROP TABLE IF EXISTS Restaurant"""
     likelist_table_drop = """DROP TABLE IF EXISTS LikeList"""
 
+    # drop sp if exists
+    drop_tag_sp = """DROP PROCEDURE IF EXISTS getTagRecommend;"""
+
+    # create stored procedure
+    tag_stored_procedure = '''
+    CREATE PROCEDURE getTagRecommend(IN friend_id integer, IN tag varchar(30))
+    BEGIN
+        SELECT r.name, r.url, r.image_url
+        FROM   Restaurant r JOIN LikeList l ON r.restaurant_id = l.restaurant_id
+        WHERE  l.user_id = friend_id AND r.categories LIKE CONCAT('%', tag, '%');
+
+    END
+
+    DELIMITER ;
+    '''
+
     if conn is not None:
         drop_table_if_exists(conn, likelist_table_drop)
         drop_table_if_exists(conn, friendship_table_drop)
@@ -120,6 +161,8 @@ def main():
         create_table(conn, friendship_table_create, 'Friendship')
         create_table(conn, restaurant_table_create, 'Restaurant')
         create_table(conn, like_table_create, 'LikeList')
+        #drop_sp_if_exists(conn, drop_tag_sp)
+        #create_stored_procedure(conn, tag_stored_procedure)
         conn.close()
     else:
         print("Error! cannot create the database connection.")

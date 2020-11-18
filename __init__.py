@@ -16,6 +16,7 @@ from InsFood.resource.friendship_update import UpdateFriends
 from InsFood.resource.likelists import Likelists
 from InsFood.resource.likelist import CheckLikeList
 from InsFood.resource.likelist_update import UpdateLikeList
+from InsFood.resource.tag_recommend import tagRecommend
 
 def create_app():
 
@@ -38,6 +39,7 @@ def create_app():
     api.add_resource(Likelists, '/likelists') # testing route
     api.add_resource(CheckLikeList, '/likelist/<string:username>')
     api.add_resource(UpdateLikeList, '/likelist')
+    api.add_resource(tagRecommend, '/tagRecommend/<int:user_id>/<int:friend_id>')
 
     return app
 
