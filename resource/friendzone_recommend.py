@@ -28,8 +28,8 @@ class friendzoneRecommend(Resource):
         password = "xddd1234"
         graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
 
-        cqlQuery1 = "MATCH (a:Person {id:{user_id}}})-[:Friends]->(b:Person)-[:Likes]->(r:Restaurant) RETURN r.id".format(user_id = user_id)
-        cqlQuery2 = "MATCH (a:Person {id:{user_id}})-[:Friends]->(b:Person)-[:Friends]->(c:Person)-[:Likes]->(r:Restaurant) WHERE a.id <> c.id RETURN r.id".format(user_id = user_id)
+        cqlQuery1 = "MATCH (a:Person {id:"+str(user_id)+"})-[:Friends]->(b:Person)-[:Likes]->(r:Restaurant) RETURN r.id"
+        cqlQuery2 = "MATCH (a:Person {id:"+str(user_id)+"})-[:Friends]->(b:Person)-[:Friends]->(c:Person)-[:Likes]->(r:Restaurant) WHERE a.id <> c.id RETURN r.id"
         with graphDB_Driver.session() as graphDB_Session:
             r1 = graphDB_Session.run(cqlQuery1)
             r2 = graphDB_Session.run(cqlQuery2)
