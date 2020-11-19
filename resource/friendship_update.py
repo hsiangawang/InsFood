@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, reqparse
 import mysql.connector
 from mysql.connector import Error
 from InsFood.database import db
+from neo4j import GraphDatabase
 
 class UpdateFriends(Resource):
 
@@ -62,6 +63,14 @@ class UpdateFriends(Resource):
 
         # Insert new friendship into friendship table
         # neo4j may need insert data here
+        uri = "bolt://localhost:7687"
+        userName = "XDBoost"
+        password = "xddd1234"
+        graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
+        cqlCreate = "MERGE (a:Person {id:{user1_id}}) MERGE (b:Person {id:{user2_id}}) MERGE (a)-[:Friends]->(b)".format(user1_id=user1_id[0][0], user2_id=user2_id[0][0])
+        with graphDB_Driver.session() as graphDB_Session:
+            graphDB_Session.run(cqlCreate)
+
         # user1 id is user1_id[0][0], user2 id is user2_id[0][0].
         sql_3 = "INSERT INTO Friendship (user1_id, user2_id) VALUES ({user1_id}, {user2_id});".format(user1_id=user1_id[0][0], user2_id=user2_id[0][0])
         print(sql_3)
@@ -101,6 +110,14 @@ class UpdateFriends(Resource):
 
         # Delete friendship from friendship table
         # neo4j may need delete data here
+        uri = "bolt://localhost:7687"
+        userName = "XDBoost"
+        password = "xddd1234"
+        graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
+        cqlCreate = "MATCH (a:Person {id:{user1_id}})-[f:Friends]->(b:Person {id:{user2_id}}) DELETE f".format(user1_id=user1_id[0][0], user2_id=user2_id[0][0])
+        with graphDB_Driver.session() as graphDB_Session:
+            graphDB_Session.run(cqlCreate)
+
         # user1 id is user1_id[0][0], user2 id is user2_id[0][0].
         sql_3 = "DELETE FROM Friendship WHERE user1_id={user1_id} AND user2_id={user2_id};".format(user1_id=user1_id[0][0], user2_id=user2_id[0][0])
         print(sql_3)

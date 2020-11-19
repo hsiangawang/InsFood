@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, reqparse
 import mysql.connector
 from mysql.connector import Error
 from InsFood.database import db
+from neo4j import GraphDatabase
 
 class UpdateLikeList(Resource):
     
@@ -72,6 +73,14 @@ class UpdateLikeList(Resource):
 
         # Insert new restaurant into LikeList table
         # neo4j may need insert data here
+        uri = "bolt://localhost:7687"
+        userName = "XDBoost"
+        password = "xddd1234"
+        graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
+        cqlCreate = "MERGE (a:Person {id:{user_id}}}) MERGE (b:Restaurant {id:{restaurant_id}}}) MERGE (a)-[:Likes]->(b)".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
+        with graphDB_Driver.session() as graphDB_Session:
+            graphDB_Session.run(cqlCreate)
+
         # user id is user_id[0][0], restaurant id is restaurant_id[0][0].
         sql_3 = "INSERT INTO LikeList (user_id, restaurant_id) VALUES ({user_id}, {restaurant_id});".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
         print(sql_3)
@@ -111,6 +120,14 @@ class UpdateLikeList(Resource):
 
         # Delete liked restaurant from likelist table
         # neo4j may need delete data here
+        uri = "bolt://localhost:7687"
+        userName = "XDBoost"
+        password = "xddd1234"
+        graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
+        cqlCreate = "MATCH (a:Person {id:{user_id}}})-[l:Likes]->(b:Restaurant {id:{restaurant_id}}}) DELETE l".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
+        with graphDB_Driver.session() as graphDB_Session:
+            graphDB_Session.run(cqlCreate)
+
         # user id is user_id[0][0], restaurant id is restaurant_id[0][0].
         sql_3 = "DELETE FROM LikeList WHERE user_id={user_id} AND restaurant_id={restaurant_id};".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
         print(sql_3)
