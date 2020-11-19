@@ -39,7 +39,8 @@ class friendzoneRecommend(Resource):
 
         recomm_restaurants_id = [i[0] for i in Counter(r1_list + r2_list).most_common(5)]
 
-        sql_2 = "SELECT name, url, image_url FROM InsFood.Restaurant WHERE restaurant_id IN {recomm_restaurants}".format(recomm_restaurants = tuple(recomm_restaurants_id))
+        sql_2 = "SELECT name, categories, url, image_url, latitude, longitude, rating, phone, address, location, restaurant_id, review_count FROM InsFood.Restaurant WHERE restaurant_id IN {recomm_restaurants}".format(
+            recomm_restaurants=tuple(recomm_restaurants_id))
         cursor.execute(sql_2)
         recomm_restaurants_list = []
         for restaurant in cursor:
