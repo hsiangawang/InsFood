@@ -77,7 +77,7 @@ class UpdateLikeList(Resource):
         userName = "XDBoost"
         password = "xddd1234"
         graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
-        cqlCreate = "MERGE (a:Person {id:{user_id}}}) MERGE (b:Restaurant {id:{restaurant_id}}}) MERGE (a)-[:Likes]->(b)".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
+        cqlCreate = "MERGE (a:Person {id:"+str(user_id[0][0])+"}}) MERGE (b:Restaurant {id:"+str(restaurant_id[0][0])+"}}) MERGE (a)-[:Likes]->(b)"
         with graphDB_Driver.session() as graphDB_Session:
             graphDB_Session.run(cqlCreate)
 
@@ -124,7 +124,7 @@ class UpdateLikeList(Resource):
         userName = "XDBoost"
         password = "xddd1234"
         graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
-        cqlCreate = "MATCH (a:Person {id:{user_id}}})-[l:Likes]->(b:Restaurant {id:{restaurant_id}}}) DELETE l".format(user_id=user_id[0][0], restaurant_id=restaurant_id[0][0])
+        cqlCreate = "MATCH (a:Person {id:"+str(user_id[0][0])+"}})-[l:Likes]->(b:Restaurant {id:"+str(restaurant_id[0][0])+"}}) DELETE l"
         with graphDB_Driver.session() as graphDB_Session:
             graphDB_Session.run(cqlCreate)
 

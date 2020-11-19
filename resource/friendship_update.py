@@ -67,7 +67,7 @@ class UpdateFriends(Resource):
         userName = "XDBoost"
         password = "xddd1234"
         graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
-        cqlCreate = "MERGE (a:Person {id:{user1_id}}) MERGE (b:Person {id:{user2_id}}) MERGE (a)-[:Friends]->(b)".format(user1_id=user1_id[0][0], user2_id=user2_id[0][0])
+        cqlCreate = "MERGE (a:Person {id:"+str(user1_id[0][0])+"}) MERGE (b:Person {id:"+str(user2_id[0][0])+"}) MERGE (a)-[:Friends]->(b)"
         with graphDB_Driver.session() as graphDB_Session:
             graphDB_Session.run(cqlCreate)
 
@@ -114,7 +114,7 @@ class UpdateFriends(Resource):
         userName = "XDBoost"
         password = "xddd1234"
         graphDB_Driver = GraphDatabase.driver(uri, auth=(userName, password))
-        cqlCreate = "MATCH (a:Person {id:{user1_id}})-[f:Friends]->(b:Person {id:{user2_id}}) DELETE f".format(user1_id=user1_id[0][0], user2_id=user2_id[0][0])
+        cqlCreate = "MATCH (a:Person {id:"+str(user1_id[0][0])+"})-[f:Friends]->(b:Person {id:"+str(user2_id[0][0])+"}) DELETE f"
         with graphDB_Driver.session() as graphDB_Session:
             graphDB_Session.run(cqlCreate)
 
