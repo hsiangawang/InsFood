@@ -8,16 +8,38 @@ from collections import defaultdict
 
 class tagRecommend(Resource):
     
-    def get(self, user_id, friend_id):
+    def get(self, user_name, friend_name):
         """ 
             give user recommendation from common liked tag of restaurant from friend
         """
-        print("user_id: ", user_id)
-        print("friend_id: ", friend_id)
-        
-        # 
+        user_name = user_name.replace('%20', ' ')
+        friend_name = friend_name.replace('%20', ' ')
+        print("user_name: ", user_name)
+        print("friend_name: ", friend_name)
+
         conn = db.create_connection(db.connection_config_dict)
         cursor = conn.cursor()
+        # To get user's user_id
+        user_id_list = []
+        sql_1 = 'SELECT user_id FROM User WHERE user_name = "{user_name}"'.format(user_name=user_name)
+        print(sql_1)
+        cursor.execute(sql_1)
+        for u in cursor:
+            user_id_list.append(u)
+        print(user_id_list)
+        user_id = user_id_list[0][0] 
+
+        # To get friend's user_id
+        friend_id_list = []
+        sql_2 = 'SELECT user_id FROM User WHERE user_name = "{user_name}"'.format(user_name=friend_name)
+        print(sql_2)
+        cursor.execute(sql_2)
+        for u in cursor:
+            friend_id_list.append(u)
+        print(friend_id_list)
+        friend_id = friend_id_list[0][0] 
+        
+        # 
         sql_findTag = '''
             SELECT r.name, r.url, r.image_url, r.categories
             FROM   Restaurant r JOIN LikeList l ON r.restaurant_id = l.restaurant_id

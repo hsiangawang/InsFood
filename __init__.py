@@ -39,7 +39,7 @@ def create_app():
     api.add_resource(Likelists, '/likelists') # testing route
     api.add_resource(CheckLikeList, '/likelist/<string:username>')
     api.add_resource(UpdateLikeList, '/likelist')
-    api.add_resource(tagRecommend, '/tagRecommend/<int:user_id>/<int:friend_id>')
+    api.add_resource(tagRecommend, '/tagRecommend/<string:user_name>/<string:friend_name>')
 
     return app
 

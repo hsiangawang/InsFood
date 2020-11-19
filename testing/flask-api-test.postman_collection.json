@@ -409,12 +409,12 @@
 			"response": []
 		},
 		{
-			"name": "/tagRecommend/3/4",
+			"name": "/tagRecommend/<username>/<friendname>",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3001/tagRecommend/3/7",
+					"raw": "http://localhost:3001/tagRecommend/Michael%20Abbott/Edmond%20Walker",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -422,8 +422,8 @@
 					"port": "3001",
 					"path": [
 						"tagRecommend",
-						"3",
-						"7"
+						"Michael%20Abbott",
+						"Edmond%20Walker"
 					]
 				}
 			},
