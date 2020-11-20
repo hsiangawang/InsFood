@@ -2,6 +2,7 @@ from flask_restful import Resource, Api, reqparse
 from neo4j import GraphDatabase
 from InsFood.database import db
 from collections import Counter
+from flask import Response
 
 class friendzoneRecommend(Resource):
     def get(self, user_name):
@@ -35,9 +36,13 @@ class friendzoneRecommend(Resource):
             r2 = graphDB_Session.run(cqlQuery2)
 
         r1_list = [item for elem in [r.values() for r in r1] for item in elem]
+        if not r1_list:
+            return Response(status=400)
         r2_list = [item for elem in [r.values() for r in r2] for item in elem]
 
-        recomm_restaurants_id = [i[0] for i in Counter(r1_list + r2_list).most_common(5)]
+        recomm_restaurants_id = [i[0] for i in Counter(r1_list + r2_list).most_common(15)]
+        if not recomm_restaurants_id:
+            return Response(status=400)
 
         sql_2 = "SELECT name, categories, url, image_url, latitude, longitude, rating, phone, address, location, restaurant_id, review_count FROM InsFood.Restaurant WHERE restaurant_id IN {recomm_restaurants}".format(
             recomm_restaurants=tuple(recomm_restaurants_id))
@@ -49,6 +54,6 @@ class friendzoneRecommend(Resource):
         conn.close()
 
         if not recomm_restaurants_list:
-            return ['fail']
+            return Response(status=400)
         else:
             return recomm_restaurants_list, 200
